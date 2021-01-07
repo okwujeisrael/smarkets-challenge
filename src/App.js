@@ -8,7 +8,7 @@ import Homepage from './pages/Homepage';
 
 const App = () => {
   const [popularIds, setPopularIds] = useState([]);
-  // const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
 
   const getPopularIds = async () => {
     const response = await axios.get("https://cors-anywhere.herokuapp.com/https://api.smarkets.com/v3/popular/event_ids/sport/football/");
@@ -16,23 +16,26 @@ const App = () => {
     setPopularIds(popular_event_ids);
   }
 
-  // const getPopularEvents = () => {
-  //   const eventsArray = [];
-  //   popularIds.forEach(async id => {
-  //     const url = `https://cors-anywhere.herokuapp.com/https://api.smarkets.com/v3/events/${id}`;
-  //     const response = await axios.get(url);
-  //     const { events } = response.data;
-  //     debugger;
-  //     eventsArray.push(events);
-  //   });
-  //   setEvents(eventsArray);
-  // }
+  const getPopularEvents = () => {
+    const arrayOfEvents = [];
+    popularIds.forEach( async id => {
+      const url = `https://cors-anywhere.herokuapp.com/https://api.smarkets.com/v3/events/${id}`;
+      const response = await axios.get(url);
+      const { events } = response.data;
+      arrayOfEvents.push(events);
+    })
+    setEvents(arrayOfEvents);
+  }
 
   useEffect(() => {
     getPopularIds();
-    // getPopularEvents();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    getPopularEvents()
+    console.log(events);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [events,popularIds])
 
   return (
     <div className="bg-black h-screen w-screen">
