@@ -8,7 +8,7 @@ import Homepage from './pages/Homepage';
 
 const App = () => {
   const [popularIds, setPopularIds] = useState([]);
-  const [events, setEvents] = useState([]);
+  const [popularEvents, setPopularEvents] = useState([]);
 
   const getPopularIds = async () => {
     const response = await axios.get("https://cors-anywhere.herokuapp.com/https://api.smarkets.com/v3/popular/event_ids/sport/football/");
@@ -16,15 +16,15 @@ const App = () => {
     setPopularIds(popular_event_ids);
   }
 
-  const getPopularEvents = () => {
-    const arrayOfEvents = [];
+   const getPopularEvents = async () => {
     popularIds.forEach( async id => {
       const url = `https://cors-anywhere.herokuapp.com/https://api.smarkets.com/v3/events/${id}`;
       const response = await axios.get(url);
+
       const { events } = response.data;
-      arrayOfEvents.push(events);
+
+      setPopularEvents([...popularEvents, events]);
     })
-    setEvents(arrayOfEvents);
   }
 
   useEffect(() => {
@@ -32,15 +32,18 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    getPopularEvents()
-    console.log(events);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [events,popularIds])
+    getPopularEvents();
+  }, [popularIds]);
+
+  console.log(popularIds, 'foo');
+  console.log(popularEvents, 'bar')
 
   return (
     <div className="bg-black h-screen w-screen">
       <Hero />
-      <Homepage popularIds={popularIds} />
+      {/* <Homepage popularIds={popularIds} /> */}
+      {/* {console.log(events)}
+      {console.log(popularIds)} */}
     </div>
   )
 }
