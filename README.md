@@ -1,5 +1,5 @@
 
-<img src="smarkets-challenge.gif">
+<img src="public/smarkets-challenge.gif">
 
 
 # Getting Started with Create React App
