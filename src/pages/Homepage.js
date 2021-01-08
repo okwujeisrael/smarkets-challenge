@@ -3,42 +3,35 @@ import axios from 'axios';
 
 import Card from "../components/Card";
 import Modal from "../components/Modal";
+import Loading from "../components/Loading";
 
 const Homepage = ({ popularIds }) => {
   const [isModalShown, setIsModalShown] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState([]);
   const [popularEvents, setPopularEvents] = useState([]);
-  const [ids, setIds] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const baseUrl = "https://cors-anywhere.herokuapp.com/https://api.smarkets.com/v3";
 
-  // const getPopularEvents = () => {
-  //   console.log(popularIds, 'inside function');
-  //   const listOfEvents = [];
-  //   popularIds.forEach(async id => {
-  //     const url = `${baseUrl}/events/${id}`;
-  //     const response = await axios.get(url);
-
-  //     const { events } = response.data;
-  //     listOfEvents.push(...events);
-  //   });
-  //   setPopularEvents(listOfEvents);
-  // }
-
-  useEffect(() => {
-    // getPopularEvents();
-    setIds(popularIds);
-    console.log(ids, 'inside function');
+  const getPopularEvents = () => {
     const listOfEvents = [];
-    ids.forEach(async id => {
+    
+    popularIds.forEach(async id => {
       const url = `${baseUrl}/events/${id}`;
       const response = await axios.get(url);
 
       const { events } = response.data;
       listOfEvents.push(...events);
+      setIsLoading(false);
     });
+
     setPopularEvents(listOfEvents);
-  }, [ids, popularIds]);
+  }
+
+  useEffect(() => {
+    getPopularEvents();
+  }, []);
+
 
   const toggleModal = () => {
     setIsModalShown(!isModalShown);
@@ -54,7 +47,7 @@ const Homepage = ({ popularIds }) => {
   return (
     <section className="w-screen flex flex-col items-center">
       {
-        popularEvents.map(popularEvent => (
+        isLoading ? <Loading /> : popularEvents.map(popularEvent => (
           <Card 
             popularEvent={popularEvent} 
             key={popularEvent.id}
@@ -62,13 +55,12 @@ const Homepage = ({ popularIds }) => {
           />
         ))
       }
+      
       <Modal 
         toggleModal={toggleModal} 
         isModalShown={isModalShown}
         selectedEvent={selectedEvent}
       />
-      {console.log(ids, 'inside jsx')}
-      {console.log(popularEvents, 'inside jsx')}
     </section>
   );
 };

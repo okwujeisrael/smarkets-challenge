@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Card = ({ popularEvent, handleClick }) => {
+
   return (
     <div 
       className="bg-black text-white w-8/12 h-28 border border-white rounded-lg p-4 m-4 cursor-pointer text-center animate__animated animate__slideInDown"
