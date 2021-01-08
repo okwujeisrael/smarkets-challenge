@@ -2,6 +2,7 @@ import React from 'react';
 
 const Modal = ({ isModalShown, toggleModal, selectedEvent }) => {
   const [event] = selectedEvent;
+  
   return (
     <>
       {isModalShown && (
@@ -12,7 +13,6 @@ const Modal = ({ isModalShown, toggleModal, selectedEvent }) => {
           <div className="w-5/12 h-42 bg-white text-black p-4 rounded-lg text-center">
             <div>
               <h3 className="text-green-600 dosis-bold text-2xl">FOOTBALL</h3>
-              <h4 className="dosis-bold">League name</h4>
               <p>{event.name}</p>     
             </div>
             <div className="flex flex-col justify-items-end">

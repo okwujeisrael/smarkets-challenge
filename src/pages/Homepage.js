@@ -16,13 +16,13 @@ const Homepage = ({ popularIds }) => {
   const getPopularEvents = () => {
     const listOfEvents = [];
     
-    popularIds.forEach(async id => {
+    popularIds.forEach(async (id, index) => {
       const url = `${baseUrl}/events/${id}`;
       const response = await axios.get(url);
 
       const { events } = response.data;
       listOfEvents.push(...events);
-      setIsLoading(false);
+      if (index === popularIds.length - 1) setIsLoading(false);
     });
 
     setPopularEvents(listOfEvents);
@@ -30,7 +30,8 @@ const Homepage = ({ popularIds }) => {
 
   useEffect(() => {
     getPopularEvents();
-  }, []);
+  // eslint-disable-next-line 
+  }, [popularIds]);
 
 
   const toggleModal = () => {
@@ -40,7 +41,7 @@ const Homepage = ({ popularIds }) => {
   const handleClick = ({ target }) => {
     const id = target.id ? target.id : target.parentElement.id;
     toggleModal();
-    const selected = popularEvents.filter(popularEvents => (popularEvents.id === id))
+    const selected = popularEvents.filter(popularEvent => (popularEvent.id === id))
     setSelectedEvent(selected);
   }
 
@@ -55,7 +56,7 @@ const Homepage = ({ popularIds }) => {
           />
         ))
       }
-      
+
       <Modal 
         toggleModal={toggleModal} 
         isModalShown={isModalShown}
