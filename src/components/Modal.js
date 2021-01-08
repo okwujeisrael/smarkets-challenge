@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Modal = ({ isModalShown, toggleModal }) => {
+const Modal = ({ isModalShown, toggleModal, selectedEvent }) => {
+  const [event] = selectedEvent;
   return (
     <>
       {isModalShown && (
@@ -12,12 +13,14 @@ const Modal = ({ isModalShown, toggleModal }) => {
             <div>
               <h3 className="text-green-600 dosis-bold text-2xl">FOOTBALL</h3>
               <h4 className="dosis-bold">League name</h4>
-              <p>Porto vs. Liverpool</p>     
+              <p>{event.name}</p>     
             </div>
             <div className="flex flex-col justify-items-end">
-              <p>Start Date: 2019-04-17</p>
-              <p>Start Time: 19:40</p>
-              <p className="text-red-400">Ended</p>
+              <p>Start Date: {event.start_date}</p>
+              <p>
+                Start Time: {new Date(event.start_datetime).toLocaleTimeString('en-US')}
+              </p>
+              <p className="text-red-400">{event.state}</p>
             </div>
           </div>
         </div> 
