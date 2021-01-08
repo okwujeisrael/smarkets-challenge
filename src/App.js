@@ -7,9 +7,39 @@ import Homepage from './pages/Homepage';
 
 const App = () => {
   const [popularIds, setPopularIds] = useState([]);
-  const [popularEvents, setPopularEvents] = useState([]);
 
-  const baseUrl = "https://cors-anywhere.herokuapp.com/https://api.smarkets.com/v3";
+  const baseUrl = "https://cors-anywhere.herokuapp.com/https://api.smarkets.com/v3/";
+
+  // const test = [
+  //   {
+  //     id: '125567',
+  //     name: 'Aston Villa vs Valencia FC',
+  //     start_date: "2019-04-17",
+  //     start_datetime: "2019-04-17T19:00:00Z",
+  //     state: "ended"
+  //   },
+  //   {
+  //     id: '125568',
+  //     name: 'Aston Villa vs Valencia FC',
+  //     start_date: "2019-04-17",
+  //     start_datetime: "2019-04-17T19:00:00Z",
+  //     state: "upcoming"
+  //   },
+    // {
+    //   id: '125568',
+    //   name: 'Aston Villa vs Valencia FC',
+    //   start_date: "2019-04-17",
+    //   start_datetime: "2019-04-17T19:00:00Z",
+    //   state: "upcoming"
+    // },
+    // {
+    //   id: '125568',
+    //   name: 'Aston Villa vs Valencia FC',
+    //   start_date: "2019-04-17",
+    //   start_datetime: "2019-04-17T19:00:00Z",
+    //   state: "upcoming"
+    // }
+  // ]
 
   const getPopularIds = async () => {
     const response = await axios.get(`${baseUrl}/popular/event_ids/sport/football/`);
@@ -17,37 +47,14 @@ const App = () => {
     setPopularIds(popular_event_ids);
   }
 
-   const getPopularEvents = async () => {
-    const listOfEvents = [];
-    popularIds.forEach( async id => {
-      const url = `${baseUrl}/events/${id}`;
-      const response = await axios.get(url);
-
-      const { events } = response.data;
-      listOfEvents.push(...events);
-
-      // setPopularEvents([...popularEvents, ...events]);
-    });
-    setPopularEvents(listOfEvents);
-    console.log(listOfEvents, 'bar');
-  }
-
   useEffect(() => {
     getPopularIds();
   }, []);
 
-  useEffect(() => {
-    getPopularEvents();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [popularIds]);
-
-
   return (
-    <div className="bg-black h-screen w-screen">
+    <div className="bg-black w-screen min-h-screen">
       <Hero />
-      <Homepage popularEvents={popularEvents} />
-      {console.log(popularIds, 'foo')}
-      {console.log(popularEvents, 'bar')}
+      <Homepage popularIds={popularIds} />
     </div>
   )
 }
