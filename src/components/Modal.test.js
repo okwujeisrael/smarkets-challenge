@@ -16,12 +16,12 @@ describe('<Modal />', () => {
     }
   ];
 
-  const mockHandler = jest.fn();
+  const closeModal = jest.fn();
 
   beforeEach(() => {
     component = render(
       <Modal         
-        toggleModal={mockHandler} 
+        toggleModal={closeModal} 
         isModalShown={true}
         selectedEvent={selectedEvent} 
       />
@@ -46,6 +46,6 @@ describe('<Modal />', () => {
   test('Clicking the modal calls an event handler', () => {
     const modal = component.container.querySelector('.modal');
     fireEvent.click(modal);
-    expect(mockHandler.mock.calls).toHaveLength(1);
+    expect(closeModal.mock.calls).toHaveLength(1);
   });
 });

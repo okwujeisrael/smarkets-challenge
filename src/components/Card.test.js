@@ -12,11 +12,11 @@ describe('<Card />', () => {
     start_date: '2021-01-08'
   };
 
-  const mockHandler = jest.fn();
+  const handleClick = jest.fn();
 
   beforeEach(() => {
     component = render(
-      <Card popularEvent={popularEvent} handleClick={mockHandler} />
+      <Card popularEvent={popularEvent} handleClick={handleClick} />
     );
   })
 
@@ -31,6 +31,6 @@ describe('<Card />', () => {
   test('Clicking a card calls an event handler', () => {
     const card = component.container.querySelector('.card');
     fireEvent.click(card);
-    expect(mockHandler.mock.calls).toHaveLength(1);
+    expect(handleClick.mock.calls).toHaveLength(1);
   });
 });
