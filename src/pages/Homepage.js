@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import Card from "../components/Card";
-import Modal from "../components/Modal";
-import Loading from "../components/Loading";
+import Card from '../components/Card';
+import Modal from '../components/Modal';
+import Loading from '../components/Loading';
 
 const Homepage = ({ popularIds }) => {
   const [isModalShown, setIsModalShown] = useState(false);
